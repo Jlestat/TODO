@@ -8,6 +8,13 @@
     <title>To-Do List</title>
 </head>
 <body>
-
+    <div class="main_section">
+        <div class="add_section">
+            <form action="">
+                <input type="text" name="title" placeholder="Required field">
+                <button type="submit">Add</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
