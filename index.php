@@ -53,5 +53,25 @@
             <?php } ?>
         </div>
     </div>
+    <script src="js/jquery-3.2.1.min.js"></script>
+
+    <script>
+        $(document).ready(function (){
+            $(".remove-to-do").click(function (){
+               const id = $(this).attr('id');
+
+               $.post("app/remove.php",
+                   {
+                       id: id
+                   },
+                   (data) => {
+                        if (data){
+                            $(this).parent().hide(600);
+                        }
+                   }
+               );
+            });
+        });
+    </script>
 </body>
 </html>
