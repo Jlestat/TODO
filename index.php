@@ -20,7 +20,17 @@
                 <button type="submit">Add</button>
             </form>
         </div>
+        <?php
+            $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
+        ?>
         <div class="show-todo-section">
+            <?php if ($todos->rowCount() === 0) {?>
+                <div class="todo-item">
+                    <input type="checkbox">
+                    <h2>This is something</h2>
+                    <small>created: 25.01.2024</small>
+                </div>
+            <?php }?>
             <div class="todo-item">
                 <input type="checkbox">
                 <h2>This is something</h2>
