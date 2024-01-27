@@ -41,10 +41,10 @@
                 <div class="todo-item">
                     <span id="<?php echo $todo['id'];?>" class="remove-to-do">x</span>
                     <?php if ($todo['checked']) { ?>
-                        <input type="checkbox" class="check-box" checked />
+                        <input type="checkbox" class="check-box" data-todo-id="<?php echo $todo['id'];?>" checked />
                         <h2 class="checked"><?php echo $todo['title'] ?></h2>
                     <?php } else { ?>
-                        <input type="checkbox" class="check-box"/>
+                        <input type="checkbox" data-todo-id="<?php echo $todo['id'];?>"  class="check-box"/>
                         <h2><?php echo $todo['title'] ?></h2>
                     <?php } ?>
                     <br>
@@ -70,6 +70,24 @@
                         }
                    }
                );
+            });
+            $(".check-box").click(function (e){
+                const id = $(this).attr('data-todo-id');
+                $.post('app/check.php',
+                    {
+                        id: id
+                    },
+                    (data) => {
+                        if (data != 'error'){
+                            const h2 = $(this).next();
+                            if (data === '1'){
+                                h2.removeClass('checked');
+                            }else {
+                                h2.addClass('checked');
+                            }
+                        }
+                    }
+                );
             });
         });
     </script>
