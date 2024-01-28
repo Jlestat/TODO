@@ -26,7 +26,7 @@
             </form>
         </div>
         <?php
-            $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
+        $todos = $conn->query("SELECT * FROM todos ORDER BY date_time DESC");
         ?>
         <div class="show-todo-section">
             <?php if ($todos->rowCount() <=0 ) {?>
@@ -37,59 +37,25 @@
                     </div>
                 </div>
             <?php }?>
-            <?php while ($todo = $todos->fetch(PDO::FETCH_ASSOC)) { ?>
+            <?php $todosArray = $todos->fetchAll(PDO::FETCH_ASSOC); ?>
+            <?php foreach ($todosArray as $todo) { ?>
                 <div class="todo-item">
-                    <span id="<?php echo $todo['id'];?>" class="remove-to-do">x</span>
+                    <span id="<?php echo $todo['id']; ?>" class="remove-to-do">x</span>
                     <?php if ($todo['checked']) { ?>
-                        <input type="checkbox" class="check-box" data-todo-id="<?php echo $todo['id'];?>" checked />
-                        <h2 class="checked"><?php echo $todo['title'] ?></h2>
+                        <input type="checkbox" class="check-box" data-todo-id="<?php echo $todo['id']; ?>" checked />
+                        <h2 class="checked"><?php echo $todo['title']; ?></h2>
                     <?php } else { ?>
-                        <input type="checkbox" data-todo-id="<?php echo $todo['id'];?>"  class="check-box"/>
-                        <h2><?php echo $todo['title'] ?></h2>
+                        <input type="checkbox" data-todo-id="<?php echo $todo['id']; ?>" class="check-box" />
+                        <h2><?php echo $todo['title']; ?></h2>
                     <?php } ?>
                     <br>
-                    <small>created:<?php echo $todo['date_time'] ?></small>
+                    <small>created:<?php echo $todo['date_time']; ?></small>
                 </div>
             <?php } ?>
+
         </div>
     </div>
     <script src="js/jquery-3.2.1.min.js"></script>
-
-    <script>
-        $(document).ready(function (){
-            $(".remove-to-do").click(function (){
-               const id = $(this).attr('id');
-
-               $.post("app/remove.php",
-                   {
-                       id: id
-                   },
-                   (data) => {
-                        if (data){
-                            $(this).parent().hide(600);
-                        }
-                   }
-               );
-            });
-            $(".check-box").click(function (e){
-                const id = $(this).attr('data-todo-id');
-                $.post('app/check.php',
-                    {
-                        id: id
-                    },
-                    (data) => {
-                        if (data != 'error'){
-                            const h2 = $(this).next();
-                            if (data === '1'){
-                                h2.removeClass('checked');
-                            }else {
-                                h2.addClass('checked');
-                            }
-                        }
-                    }
-                );
-            });
-        });
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>
