@@ -14,7 +14,7 @@ if (isset($_POST['id'])){
         $uId = $todo['id'];
         $checked = $todo['checked'];
         $uChecked = $checked ? 0 : 1;
-        $res = $conn->query("UPDATE todos SET checked=$uChecked WHERE id=uId");
+        $res = $conn->query("UPDATE todos SET checked=$uChecked WHERE id={$uId}");
         if ($res){
             echo $checked;
         }else{
